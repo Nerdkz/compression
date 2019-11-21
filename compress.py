@@ -29,18 +29,18 @@ class CodificacaoHuffman:
 		self.mapa_descompressao = {}
 
 	# Cria o dicionario da partir do texto
-	def criaDicionario(self, texto):
+	def cria_dicionario(self, texto):
 		dicionario = {}
 		for character in texto:
 			if character in dicionario:
 				dicionario[character] += 1
 			else:
-				dicionario[character] = 0
+				dicionario[character] = 1
 		return dicionario
 
 	def cria_no(self, dic_freq):
-		for valor in dic_freq:
-			no = No(valor, dic_freq[valor])
+		for chave in dic_freq:
+			no = No(chave, dic_freq[chave])
 			heapq.heappush(self.arvore, no)
 			
 
@@ -133,7 +133,6 @@ class CodificacaoHuffman:
 			while(len(byte) > 0):
 				byte = ord(byte)
 				bits = bin(byte)[2:].rjust(8, '0')
-				#print(bits)
 				bit_string += bits
 				byte = file.read(1)
 
@@ -156,7 +155,7 @@ def main():
 		text = file.read()
 		text = text.rstrip()
 
-		dic_freq = self.criaDicionario(text)
+		dic_freq = self.cria_dicionario(text)
 		self.cria_no(dic_freq)
 		self.junta_nos()
 		self.cria_codigo()
